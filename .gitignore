@@ -1,1 +1,3 @@
 node_modules
+.gitignore
+users7-2.json

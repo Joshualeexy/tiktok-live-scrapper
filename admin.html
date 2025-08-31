@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - TikTok Logger</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-8 font-sans">
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-4 text-center">🛠️ Admin Panel: TikTok Logger</h1>
+    <div id="loggerList" class="space-y-4 mb-6"></div>
+    <button onclick="stopAll()" class="w-full bg-red-700 hover:bg-red-800 text-white py-3 px-4 rounded">
+      🛑 Stop All Loggers
+    </button>
+  </div>
+
+
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-4 text-center">📃Logged List</h1>
+    <div id="loggedlist" class="space-y-4 mb-6">
+
+    </div>
+  </div>
+
+  <script>
+    async function fetchStatus() {
+      const res = await fetch('/status');
+      const data = await res.json();
+
+      const container = document.getElementById('loggerList');
+      container.innerHTML = '';
+      if (data.length === 0) {
+        container.innerHTML = `<p class="text-center text-gray-500">No loggers running.</p>`;
+        return;
+      }
+
+
+      data.forEach(({ username, pid }) => {
+        const div = document.createElement('div');
+        div.className = "flex justify-between items-center bg-gray-50 p-4 rounded shadow";
+
+        div.innerHTML = `
+          <div>
+            <p class="font-semibold text-lg">@${username}</p>
+            <p class="text-sm text-gray-600">PID: ${pid}</p>
+          </div>
+          <button onclick="stopLogger('${username}')" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+            Stop
+          </button>
+        `;
+
+        container.appendChild(div);
+      });
+    }
+
+    async function stopLogger(username) {
+      const res = await fetch('/stop', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username })
+      });
+      const result = await res.json();
+      alert(result.message);
+      fetchStatus();
+    }
+
+    async function stopAll() {
+      const res = await fetch('/stop-all', { method: 'POST' });
+      const result = await res.json();
+      alert(result.message);
+      fetchStatus();
+    }
+    async function getuilist() {
+      const res = await fetch('/loggers');
+      const data = await res.json();
+
+      const container = document.getElementById('loggedlist');
+      container.innerHTML = ''; // optional: clear previous items
+
+      data.files.forEach((file) => {
+        const div = document.createElement('div');
+        div.className = "flex justify-between items-center bg-gray-50 p-4 rounded shadow mb-2";
+
+        div.innerHTML = `
+      <p class="font-semibold text-lg">${file.name}</p>
+      <a href="${file.name}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" target="_blank">
+        open
+      </a>
+    `;
+
+        container.appendChild(div);
+      });
+    }
+
+    setInterval(fetchStatus, 5000);
+    fetchStatus();
+    getuilist();
+  </script>
+</body>
+
+</html>

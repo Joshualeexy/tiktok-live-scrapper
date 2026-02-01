@@ -72,4 +72,4 @@ node format.js
 *Note: This will delete all generated .json and .html log files while keeping core engine files.*
 
 ## 📜 License
-ISC - Feel free to adapt and extend for your own scraping needs.
+MIT - See the `LICENSE` file for details.

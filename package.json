@@ -1,12 +1,12 @@
 {
-  "name": "TikTok Stealth Live Logger",
+  "name": "tiktok-stealth-live-logger",
   "version": "1.0.0",
   "scripts": {
     "start": "node app.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "description": "",
   "dependencies": {
     "axios": "^1.10.0",

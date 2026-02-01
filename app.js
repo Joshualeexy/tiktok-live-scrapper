@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import { spawn } from 'child_process';
 import path from 'path';
@@ -110,4 +111,3 @@ app.get('/loggers', (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
-

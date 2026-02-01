@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>TikTok Live Logger</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -13,8 +13,7 @@
   <div class="bg-white p-6 rounded shadow-md w-11/12 max-w-sm">
     <h1 class="text-2xl font-bold mb-4 text-center">Run TikTok Live Logger</h1>
 
-    <input id="username" type="text" placeholder="Enter TikTok username"
-      class="w-full p-3 border rounded mb-4" />
+    <input id="username" type="text" placeholder="Enter TikTok username" class="w-full p-3 border rounded mb-4" />
 
     <button id="startBtn" onclick="runLogger()"
       class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700 flex justify-center items-center gap-2">
@@ -54,7 +53,7 @@
 
       // Generate expected HTML filename and show link
       const now = new Date();
-      const filename = `${username}_live_${now.getFullYear()}_${now.getMonth()}_${now.getDate()}.html`;
+      const filename = `${username}_live_${now.getFullYear()}_${now.getMonth() + 1}_${now.getDate()}.html`;
       linkRef.href = `/${filename}`;
       linkRef.textContent = `📂 View ${filename}`;
       linkRef.classList.remove('hidden');

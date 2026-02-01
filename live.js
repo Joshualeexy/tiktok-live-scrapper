@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { TikTokLiveConnection, WebcastEvent } from 'tiktok-live-connector';
 import fs from 'fs';
 import path from 'path';
@@ -19,7 +20,7 @@ const connection = new TikTokLiveConnection(username);
 
 // Generate a timestamp safe for filenames
 const dateObj = new Date();
-const timestamp = `${dateObj.getFullYear()}_${dateObj.getMonth()}_${dateObj.getDate()}`
+const timestamp = `${dateObj.getFullYear()}_${dateObj.getMonth() + 1}_${dateObj.getDate()}`
 const jsonFilename = `${username}_live_${timestamp}.json`;
 const HTMLFilename = `${username}_live_${timestamp}.html`;
 const logPath = path.join(__dirname, jsonFilename);
@@ -27,6 +28,13 @@ const templatePath = path.join(__dirname, 'template.html');
 const newHTMLPath = path.join(__dirname, HTMLFilename);
 
 let logData = [];
+if (fs.existsSync(logPath)) {
+  try {
+    logData = JSON.parse(fs.readFileSync(logPath, 'utf-8'));
+  } catch (e) {
+    logData = [];
+  }
+}
 
 // If template exists, create HTML from it
 if (fs.existsSync(templatePath)) {

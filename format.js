@@ -10,7 +10,6 @@ const keepFiles = new Set([
     'package-lock.json',
     'template.html',
     'format.js',
-    'users7-2.json',
     'script.js'
 
 ]);
@@ -28,7 +27,7 @@ fs.readdirSync(dir).forEach(file => {
     const base = path.basename(file);
 
     const isDeletable =
-        (ext === '.json' || ext === '.html') &&
+        (ext === '.json' || ext === '.jsonl' || ext === '.html') &&
         !keepFiles.has(base);
 
     if (isDeletable) {
